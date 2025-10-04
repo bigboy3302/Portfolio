@@ -24,7 +24,7 @@ export default function App(){
           <div className="brand" aria-label="Site logo">Portfolio</div>
           <div role="menubar">
             <NavLink to="/" role="menuitem" className={({isActive}) => isActive ? 'active' : ''}>Home</NavLink>
-            <NavLink to="/skills" role="menuitem" className={({isActive}) => isActive ? 'active' : ''}>Skills</NavLink>
+                     <NavLink to="/skill" role="menuitem" className={({isActive}) => isActive ? 'active' : ''}>Skills 3D</NavLink>
             <NavLink to="/projects" role="menuitem" className={({isActive}) => isActive ? 'active' : ''}>Projects</NavLink>
             <NavLink to="/contact" role="menuitem" className={({isActive}) => isActive ? 'active' : ''}>Contact</NavLink>
           </div>
