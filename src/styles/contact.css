@@ -1,0 +1,54 @@
+/* === Terminal Card === */
+.term.card{
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+.term-bar{
+  display:flex; align-items:center; gap:.5rem;
+  padding:.5rem .75rem; border-bottom:1px solid rgba(255,255,255,.08);
+  background: rgba(15,23,42,.75);
+  position: sticky; top:0; z-index:1;
+}
+.term-bar .dot{ width:12px; height:12px; border-radius:50%; display:inline-block; }
+.term-bar .red{ background:#ef4444; } .term-bar .yellow{ background:#f59e0b; } .term-bar .green{ background:#22c55e; }
+.term-title{ margin-left:.25rem; color:#cbd5e1; font-weight:700; letter-spacing:.2px; }
+
+.term-body{ padding: .9rem; }
+
+.term-log{
+  list-style:none; margin:0 0 .6rem 0; padding:0; min-height: 96px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  color:#e5e7eb;
+}
+.term-log li{ padding:.08rem 0; }
+.term-log .caret{
+  color:#94a3b8; animation: blink 1s steps(1,end) infinite;
+}
+@keyframes blink{ 50%{ opacity: 0; } }
+
+.term-form{ display:grid; gap:.6rem; }
+.term-row{ display:grid; grid-template-columns: 120px 1fr; gap:.75rem; align-items:center; }
+.term-label{
+  justify-self:end; color:#94a3b8; font-weight:700; letter-spacing:.2px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+.term-input{
+  width:100%;
+  padding:.7rem .85rem; border-radius:.6rem; color:#e5e7eb;
+  background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); outline:none;
+}
+.term-input:focus{ border-color: #06b6d4; box-shadow: 0 0 0 4px rgba(6,182,212,.18); }
+.term-text{ min-height: 140px; resize: vertical; }
+
+.term-actions{ display:flex; align-items:center; gap:.75rem; margin-top:.25rem; }
+.term-hint{ color:#9ca3af; font-size:.9rem; }
+.hp{ position:absolute; left:-9999px; opacity:0; }
+@media (max-width:640px){
+  .term-row{ grid-template-columns: 1fr; }
+  .term-label{ justify-self:start; }
+}

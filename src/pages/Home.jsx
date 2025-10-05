@@ -21,7 +21,7 @@ export default function Home(){
       <div className="container">
         <div className="card" style={{padding:'2rem'}}>
           <h1 className="display-xxl">Adrians Raitums</h1>
-<p className="kicker">Creative Front-End Developer</p>
+<p className="kicker">Creative Front-End and Back-End Developer</p>
 <hr className="rule" />
 
           <p>
@@ -48,8 +48,8 @@ export default function Home(){
                   </p>
                   <p>
                     I’m an enthusiastic, curious learner with a good sense of humor who enjoys helping people.
-                    Give me a clear brief—say it once (or twice)—and I’ll break it down, tackle the hard parts, and deliver.
-                    Tough jobs don’t scare me; with the time I’m given, I ship, iterate, and finish what I start—every time.
+                    Give me a clear brief—say it once—and I’ll break it down, tackle the hard parts, and deliver.
+                    Tough jobs don’t scare me; with the time I’m given, I ship, and finish what I start—every time.
                   </p>
                 </li>
               </ul>

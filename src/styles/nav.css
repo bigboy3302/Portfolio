@@ -1,0 +1,14 @@
+.nav{
+  position:sticky; top:0; z-index:40;
+  backdrop-filter: blur(8px);
+  background: rgba(11,15,26,.6);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; padding:.75rem 0; }
+.nav a{ margin-left:1rem; padding:.5rem .75rem; border-radius:999px; }
+.nav a.active, .nav a:hover{ background: rgba(255,255,255,.08); }
+
+/* Hide desktop row on mobile; MobilePaintMenu shows */
+@media (max-width: 768px){
+  .nav .nav-inner > div[role="menubar"]{ display:none; }
+}

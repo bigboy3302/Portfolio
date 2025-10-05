@@ -1,0 +1,13 @@
+.cursor-fx{
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  mix-blend-mode: normal;     /* don’t brighten page edges */
+}
+
+/* Hide entirely on touch/pen devices */
+@media (pointer: coarse), (hover: none){
+  .cursor-fx{ display:none !important; }
+  body.cursor-active{ cursor:auto !important; }
+}

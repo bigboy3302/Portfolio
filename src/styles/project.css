@@ -1,0 +1,466 @@
+/* ---------------------------------------------------------
+   PAGE LAYOUT BITS (kept small; your existing styles can stay)
+---------------------------------------------------------- */
+.projects-wrap{
+  position: relative;
+  min-height: calc(100svh - 60px);
+  padding: clamp(1rem, 3vw, 1.6rem) 0 2rem;
+  overflow: clip;
+}
+
+.projects-menu{
+  min-height: calc(100svh - 60px);
+  display: grid;
+  place-items: center;
+}
+
+.big-buttons{
+  display: grid;
+  gap: 1rem;
+  width: min(880px, 92%);
+  margin: 0 auto;
+}
+
+/* Keep your ongoing styles / carousel styles from before
+   (not repeating them here to keep this file focused). */
+
+/* ---------------------------------------------------------
+   BTN-53 — animated letter button (themeable)
+---------------------------------------------------------- */
+:root{
+  --btn53-bg: #0f172a;   /* inner plate bg when idle */
+  --btn53-fg: #e5e7eb;   /* inner plate text */
+  --btn53-border: rgba(255,255,255,.18);
+  --btn53-alt-bg: #ffffff;
+  --btn53-alt-fg: #0b0f1a;
+}
+
+.btn-53,
+.btn-53 *,
+.btn-53 :after,
+.btn-53 :before,
+.btn-53:after,
+.btn-53:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+
+.btn-53 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  background-color: transparent;
+  background-image: none;
+  color: var(--btn53-fg);
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  padding: 0;
+
+  /* container */
+  border: 1px solid var(--btn53-border);
+  border-radius: 999px;
+  display: block;
+  font-weight: 900;
+  overflow: hidden;
+  padding: 1.15rem 2.4rem;  /* responsive-ish size */
+  position: relative;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.btn-53 .original {
+  /* “plate” that slides down on hover */
+  background: var(--btn53-bg);
+  color: var(--btn53-fg);
+  display: grid;
+  inset: 0;
+  place-content: center;
+  position: absolute;
+  transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.btn-53:hover .original,
+.btn-53:focus-visible .original {
+  transform: translateY(100%);
+}
+
+.btn-53 .letters {
+  display: inline-flex;
+  justify-content: center;
+  gap: .05em;
+}
+
+.btn-53 span {
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.2s;
+}
+
+.btn-53 span:nth-child(2n) {
+  transform: translateY(15px);
+}
+
+.btn-53:hover span,
+.btn-53:focus-visible span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-53:hover span:nth-child(2) { transition-delay: 0.06s; }
+.btn-53:hover span:nth-child(3) { transition-delay: 0.12s; }
+.btn-53:hover span:nth-child(4) { transition-delay: 0.18s; }
+.btn-53:hover span:nth-child(5) { transition-delay: 0.24s; }
+.btn-53:hover span:nth-child(6) { transition-delay: 0.30s; }
+.btn-53:hover span:nth-child(7) { transition-delay: 0.36s; }
+.btn-53:hover span:nth-child(8) { transition-delay: 0.42s; }
+.btn-53:hover span:nth-child(9) { transition-delay: 0.48s; }
+
+/* Alt (inverted) look */
+.btn-53.alt .original{
+  background: var(--btn53-alt-bg);
+  color: var(--btn53-alt-fg);
+}
+
+/* A11y focus */
+.btn-53:focus-visible{
+  outline: 3px solid #22d3ee;
+  outline-offset: 4px;
+}
+
+/* Smaller screens */
+@media (max-width: 520px){
+  .btn-53{ padding: 1rem 1.6rem; }
+}
+
+/* ---------------------------------------------------------
+   ONGOING (reuse your previous styles — include them below)
+---------------------------------------------------------- */
+
+/* … keep the rest of your carousel / ongoing CSS from before … */
+
+.mode-ongoing::before{
+  content:"";
+  position: fixed; inset:0; z-index: 0;
+  background:
+    radial-gradient(1200px 800px at 10% -20%, rgba(34,211,238,.18), transparent 50%),
+    radial-gradient(1000px 700px at 110% 10%, rgba(139,92,246,.18), transparent 50%),
+    #0b0f1a;
+}
+.mode-ongoing::after{
+  content:"";
+  position: fixed; inset:0; z-index:0;
+  background:
+    radial-gradient(800px 500px at 20% 80%, rgba(236,72,153,.16), transparent 60%),
+    radial-gradient(700px 420px at 80% 20%, rgba(34,197,94,.12), transparent 60%);
+  mix-blend-mode: overlay;
+  pointer-events:none;
+  filter: contrast(1.1) saturate(1.15);
+}
+
+/* Top bar in ongoing mode */
+.ongoing-topbar{
+  position: relative; z-index: 2;
+  display:flex; justify-content:space-between; align-items:center;
+  padding: .25rem min(4vw, 1rem);
+}
+.home-link, .back-btn{
+  display:inline-flex; align-items:center; gap:.4rem;
+  padding:.5rem .75rem; border-radius: .75rem;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.05);
+  color:#e5e7eb; font-weight:700;
+}
+.home-link:hover, .back-btn:hover{ background: rgba(255,255,255,.09); }
+
+/* Stage */
+.ongoing-stage{
+  position: relative; z-index: 2;
+  margin: 0 auto;
+  width:min(1100px, 94%);
+  padding: clamp(.6rem, 1.8vw, 1rem);
+}
+
+/* Carousel */
+.carousel{
+  position: relative;
+  display:grid;
+  grid-template-columns: 56px 1fr 56px;
+  gap: .6rem;
+  align-items: center;
+}
+
+.carousel .nav{
+  height: 56px; width:56px;
+  border-radius: 50%;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color:#e5e7eb; font-size: 2rem; line-height: 0;
+  display:grid; place-items:center;
+  transition: transform .18s ease, background .18s ease;
+}
+.carousel .nav:hover{ transform: translateY(-1px); background: rgba(255,255,255,.12); }
+.carousel .nav.left{ grid-column: 1 / 2; }
+.carousel .nav.right{ grid-column: 3 / 4; }
+
+/* Slide layout */
+.slide{
+  grid-column: 2 / 3;
+  display:grid;
+  grid-template-columns: minmax(0, 56%) 1fr;
+  gap: clamp(.8rem, 2vw, 1.2rem);
+  align-items: stretch;
+  border-radius: 16px;
+  border:1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  overflow:hidden;
+  isolation:isolate;
+}
+@media (max-width: 900px){
+  .slide{ grid-template-columns: 1fr; }
+}
+
+/* Media area */
+.media{
+  position: relative;
+  min-height: 280px;
+  background: rgba(0,0,0,.18);
+}
+.cover-btn{
+  position:absolute; inset:0;
+  border:0; padding:0; margin:0; background:transparent; cursor:pointer;
+}
+.cover{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter: saturate(1.05) contrast(1.06); }
+.play{
+  position:absolute; left:50%; top:50%; transform: translate(-50%,-50%);
+  font-size: clamp(2.4rem, 4vw, 3rem);
+  width: 72px; height:72px; border-radius:50%;
+  display:grid; place-items:center;
+  background: rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+.video-frame{ position:absolute; inset:0; display:grid; place-items:center; background:#0a0f1a; }
+.video-frame video, .video-frame iframe{ width:100%; height:100%; object-fit:cover; }
+
+/* Text area */
+.meta{
+  padding: clamp(.8rem, 2vw, 1.1rem);
+  display:grid; align-content:center; gap:.45rem;
+}
+.title{ font-size: clamp(1.2rem, 2.6vw, 1.8rem); font-weight: 900; letter-spacing:.3px; }
+.minor{ color:#a1a1aa; font-weight:600; }
+.minor .dot{ margin: 0 .4rem; opacity:.7; }
+.desc{ color:#e5e7eb; }
+
+/* Dots */
+.dots{
+  margin-top: .8rem;
+  display:flex; justify-content:center; gap:.5rem;
+}
+.dot{
+  width: 10px; height: 10px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);
+  background: transparent;
+  transition: transform .18s ease, background .18s ease;
+}
+.dot:hover{ transform: translateY(-1px); background: rgba(255,255,255,.25); }
+.dot.active{ background: linear-gradient(90deg, #22d3ee, #8b5cf6); border-color: transparent; }
+
+/* Make sure cursor canvas (if you use it) stays below overlays */
+.projects-wrap, .projects-wrap *{ position: relative; z-index: 1; }
+
+/* ===== Video modal ===== */
+.video-modal{
+  position: fixed; inset: 0; z-index: 9999;
+  display: grid; place-items: center;
+}
+.video-backdrop{
+  position: absolute; inset: 0;
+  background: rgba(2,6,23,.72);
+  backdrop-filter: blur(6px) saturate(1.05);
+  border: 0; margin: 0; padding: 0;
+}
+.video-sheet{
+  position: relative;
+  width: min(1100px, 94vw);
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0b0f1a;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 30px 90px rgba(0,0,0,.6);
+  animation: vm-pop .25s cubic-bezier(.22,1,.36,1);
+}
+@keyframes vm-pop{ from{ transform: translateY(8px) scale(.98); opacity:.7;} to{ transform:none; opacity:1; } }
+
+.video-close{
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  width: 38px; height: 38px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06); color: #e5e7eb;
+}
+.video-close:hover{ background: rgba(255,255,255,.1); }
+
+.video-player{
+  position: absolute; inset: 0; display: grid; place-items: center;
+}
+.video-player video,
+.video-player iframe{
+  width: 100%; height: 100%;
+  object-fit: cover; border: 0;
+}
+
+/* Center the stage vertically + horizontally */
+.ongoing-stage{
+  /* size & center */
+  width: min(1100px, 94%);
+  margin-inline: auto;
+
+  /* NEW: make this area fill the viewport (minus nav/topbar)
+     and center the carousel + dots */
+  min-height: calc(100svh - 140px); /* adjust if your navbar is taller/shorter */
+  display: grid;
+  align-content: center;   /* vertical centering */
+  justify-items: center;   /* horizontal centering */
+  gap: .8rem;
+  padding-block: .4rem;
+}
+
+/* Keep the topbar from pushing the stage off-screen on small devices */
+@media (max-width: 640px){
+  .ongoing-stage{
+    min-height: calc(100svh - 120px);
+  }
+}
+
+/* Make the carousel itself a bit tighter and centered */
+.carousel{
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  gap: .6rem;
+  align-items: center;      /* vertical align of nav buttons */
+  justify-items: center;    /* keeps the middle column centered */
+}
+
+/* Optional: constrain the slide so it doesn’t look too tall on big monitors */
+.slide{
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* If your menu view should also feel perfectly centered */
+.projects-menu{
+  display: grid;
+  place-items: center;
+  min-height: calc(100svh - 120px);
+  text-align: center;
+}
+
+/* Center the menu slightly lower for balance */
+.projects-menu{
+  display:grid;
+  place-items:center;
+  min-height: calc(100svh - 120px);
+  text-align:center;
+}
+
+/* ---------- Future Projects: modern glass cards ---------- */
+:root{
+  --fp-accent: linear-gradient(90deg, #22d3ee, #8b5cf6);
+}
+
+.fp-header-inline{
+  position:relative; margin:.25rem 0 1rem; padding:1rem 1rem;
+  border-radius:16px; overflow:hidden; background:#0b0f1a;
+  border:1px solid rgba(255,255,255,.08);
+}
+.fp-header-inline::before{
+  content:""; position:absolute; inset:-30%;
+  background:
+    radial-gradient(360px 180px at 20% 20%, rgba(34,211,238,.25), transparent 60%),
+    radial-gradient(420px 200px at 80% 60%, rgba(139,92,246,.25), transparent 60%),
+    radial-gradient(380px 200px at 60% -10%, rgba(236,72,153,.22), transparent 60%);
+  filter: blur(20px) saturate(1.15); opacity:.9; pointer-events:none;
+}
+.fp-title-inline{ position:relative; z-index:1; margin:0; font-weight:900; font-size:clamp(1.3rem,4vw,2rem); }
+
+.fp-toolbar-inline{
+  display:flex; gap:.6rem; align-items:center; justify-content:space-between;
+  margin:0 0 1rem; flex-wrap:wrap;
+}
+.fp-input{
+  flex:1 1 320px; padding:.75rem .95rem; border-radius:12px;
+  background: rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
+  color:#e5e7eb; outline:none;
+}
+.fp-input:focus{ border-color:#22d3ee; box-shadow:0 0 0 3px rgba(34,211,238,.25); }
+.fp-toggle{ display:inline-flex; align-items:center; gap:.5rem; color:#cbd5e1; font-weight:600; }
+.fp-toggle input{ width:18px; height:18px; }
+
+.fp-grid{ display:grid; gap:1.1rem; grid-template-columns: repeat(3, minmax(0,1fr)); }
+@media (max-width: 1060px){ .fp-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 640px){ .fp-grid{ grid-template-columns: 1fr; } }
+
+.fp-card{
+  --blur: 10px;
+  position: relative; border-radius: 16px; overflow: hidden;
+  background: radial-gradient(120% 140% at 10% -10%, rgba(34,211,238,.10), transparent 40%),
+              radial-gradient(90% 120% at 110% 120%, rgba(139,92,246,.10), transparent 40%),
+              rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  padding: 1rem; isolation:isolate; backdrop-filter: blur(var(--blur));
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.fp-card:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); box-shadow: 0 26px 60px rgba(0,0,0,.42); }
+
+.fp-border{
+  content:""; position:absolute; inset:-1px; z-index:0; pointer-events:none;
+  background:
+    linear-gradient(120deg, rgba(34,211,238,.55), rgba(139,92,246,.55), rgba(236,72,153,.55));
+  filter: blur(18px); opacity:.25; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; padding:2px; border-radius:18px;
+}
+
+.fp-card-head{ position:relative; z-index:1; display:flex; justify-content:space-between; gap:.6rem; align-items:center; margin-bottom:.35rem; }
+.fp-id{ display:flex; align-items:center; gap:.6rem; }
+.fp-icon{ width:36px; height:36px; border-radius:10px; display:grid; place-items:center; background: rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); font-size:1.05rem; }
+.fp-card-title{ margin:0; font-weight:900; letter-spacing:.2px; font-size: clamp(1rem, 2.2vw, 1.25rem); }
+
+.fp-badge{ padding:.28rem .55rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.18); font-weight:800; font-size:.82rem; opacity:.95; }
+.fp-badge.planning{ background:rgba(34,211,238,.12); }
+.fp-badge.research{ background:rgba(99,102,241,.12); }
+.fp-badge.prototyping{ background:rgba(236,72,153,.12); }
+.fp-badge.paused{ background:rgba(148,163,184,.12); }
+
+.fp-card-text{ position:relative; z-index:1; color:#e5e7eb; line-height:1.45; margin:.35rem 0 .55rem; }
+.fp-impact{ color:#a7f3d0; font-weight:700; margin:.1rem 0 .6rem; }
+
+.fp-tags{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:.4rem; margin:0; padding:0; list-style:none; }
+.fp-tag{ font-size:.8rem; color:#cbd5e1; padding:.22rem .5rem; border-radius:.5rem; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); }
+
+.fp-bottom{ display:flex; align-items:center; justify-content:space-between; gap:.8rem; margin-top:.6rem; }
+
+.fp-ring{
+  width:44px; height:44px; border-radius:50%;
+  display:grid; place-items:center; position:relative;
+  background: conic-gradient(#22d3ee 0deg, rgba(255,255,255,.12) 0); /* overwritten inline */
+}
+.fp-ring-hole{
+  position:absolute; width:32px; height:32px; border-radius:50%;
+  background: rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.14);
+  box-shadow: inset 0 0 14px rgba(0,0,0,.45);
+}
+.fp-ring-label{ position:relative; z-index:1; color:#e5e7eb; font-size:.78rem; font-weight:800; }
+
+.fp-links{ position:relative; z-index:1; display:flex; gap:.5rem; flex-wrap:wrap; margin-left:auto; }
+.fp-link{ display:inline-flex; gap:.35rem; padding:.42rem .6rem; border-radius:.55rem; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color:#e5e7eb; font-weight:800; font-size:.9rem; }
+.fp-link:hover{ background: rgba(255,255,255,.12); }
+
+.fp-empty{ grid-column:1 / -1; opacity:.8; color:#cbd5e1; text-align:center; padding:1.25rem 0; }
