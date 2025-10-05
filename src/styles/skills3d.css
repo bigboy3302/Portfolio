@@ -57,7 +57,7 @@
 
 /* Cropped hero image (smaller height + nice crop) */
 .skill3d-card-media{
-  height: 200px;                 /* smaller than 240px */
+  height: 240px;                 /* smaller than 240px */
   background-size: cover;
   background-position: center 40%; /* slight up-crop */
   filter: saturate(1.05) contrast(1.05);

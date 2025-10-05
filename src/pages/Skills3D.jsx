@@ -18,7 +18,7 @@ function usePrefersReducedMotion(){
 /* ===== raycast layer (planets only) ===== */
 const INTERACT_LAYER = 1;
 
-/* ===== skills ===== */
+/* ===== skills (your data kept as-is) ===== */
 const SKILLS = [
   { id:"PHP",      percent:87, started:"2022",
     desc:"Modern PHP: OOP and Composer, PSR standards, MVC patterns, building secure REST APIs, and testing with PHPUnit. Lots of real examples and clean code habits.",
@@ -76,18 +76,6 @@ function makeStreakTexture({ size=256 } = {}) {
   grd.addColorStop(.8, "rgba(255,255,255,.85)");
   grd.addColorStop(1, "rgba(255,255,255,0)");
   ctx.fillStyle = grd; ctx.fillRect(0, size/2 - 6, size, 12);
-  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; return tex;
-}
-/* flame tail (orange → transparent) */
-function makeFlameTexture({ size=256 } = {}){
-  const c = document.createElement("canvas"); c.width = c.height = size;
-  const g = c.getContext("2d");
-  const grd = g.createRadialGradient(size*0.15, size*0.5, 0, size*0.15, size*0.5, size*0.85);
-  grd.addColorStop(0,   "rgba(255,200,80,1)");
-  grd.addColorStop(0.4, "rgba(255,120,40,0.9)");
-  grd.addColorStop(1,   "rgba(255,80,0,0)");
-  g.fillStyle = grd;
-  g.fillRect(0,0,size,size);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; return tex;
 }
 
@@ -371,7 +359,7 @@ export default function Skills3D(){
     const streakTex = makeStreakTexture();
     const streakMat = new THREE.SpriteMaterial({ map: streakTex, transparent:true, depthWrite:false, opacity:0.9, blending:THREE.AdditiveBlending });
     const streaks = [];
-    const maxStreaks = reduced ? 4 : 10; // MORE shooting stars
+    const maxStreaks = reduced ? 4 : 10;
     function spawnStreak(){
       if (streaks.length >= maxStreaks) return;
       const sp = new THREE.Sprite(streakMat.clone());
@@ -383,7 +371,7 @@ export default function Skills3D(){
       scene.add(sp); streaks.push(sp);
     }
 
-    // --- METEORS (static + flying with fire) ---
+    // --- METEORS (static + flying rocks only) ---
     const meteorGeo = new THREE.IcosahedronGeometry(0.16, 1);
     const meteorMat = new THREE.MeshStandardMaterial({ color: 0xb0b7c3, roughness:0.9, metalness:0.05 });
 
@@ -402,8 +390,7 @@ export default function Skills3D(){
       scene.add(m); staticMeteors.push(m);
     }
 
-    // flying meteors
-    const flameTex = makeFlameTexture();
+    // flying meteors (no flame)
     const flyMeteors = [];
     const maxFly = reduced ? 2 : 5;
 
@@ -416,18 +403,6 @@ export default function Skills3D(){
       const rock = new THREE.Mesh(meteorGeo, meteorMat.clone());
       group.add(rock);
 
-      // flame tail sprite
-      const tail = new THREE.Sprite(new THREE.SpriteMaterial({
-        map: flameTex,
-        transparent: true,
-        depthWrite: false,
-        opacity: 0.85,
-        blending: THREE.AdditiveBlending
-      }));
-      tail.scale.set(2.8, 1.2, 1); // stretched
-      tail.position.set(-1.2, 0, 0); // behind rock
-      group.add(tail);
-
       // start position & velocity
       group.position.set(
         9 + Math.random()*6, // start right
@@ -439,14 +414,11 @@ export default function Skills3D(){
         -0.03 - Math.random()*0.06,
         -0.01 + Math.random()*0.05
       );
-      // store userData
       group.userData = {
         vel,
         rot: new THREE.Vector3(
           Math.random()*0.03, Math.random()*0.03, Math.random()*0.03
-        ),
-        life: 0, // seconds alive
-        tail
+        )
       };
 
       scene.add(group);
@@ -513,7 +485,7 @@ export default function Skills3D(){
       // spawns
       shootTimer -= dt; meteorTimer -= dt; flyTimer -= dt;
       if (shootTimer <= 0){ spawnStreak(); shootTimer = (reduced ? 1.6 : 0.9) + Math.random()*0.8; }
-      if (meteorTimer <= 0){ /* keep some statics; they already exist */ meteorTimer = 99; } // no continuous spawn for statics
+      if (meteorTimer <= 0){ /* statics are pre-seeded */ meteorTimer = 99; }
       if (flyTimer <= 0){ spawnFlyMeteor(); flyTimer = (reduced ? 4.5 : 2.2) + Math.random()*1.4; }
 
       // update streaks
@@ -521,8 +493,7 @@ export default function Skills3D(){
         const s = streaks[i];
         s.position.add(s.userData.vel);
         s.material.opacity = Math.min(0.95, s.material.opacity + 0.06);
-        // fade out slightly over life
-        s.material.opacity *= 0.995;
+        s.material.opacity *= 0.995; // gentle fade
         if (s.position.x > 14 || s.position.y < -8 || s.position.z > 10 || s.material.opacity < 0.08){
           scene.remove(s); streaks.splice(i,1);
         }
@@ -536,23 +507,14 @@ export default function Skills3D(){
         m.rotation.z += m.userData.spin.z;
       }
 
-      // update flying meteors + tails
+      // update flying meteors (rocks only)
       for (let i=flyMeteors.length-1;i>=0;i--){
         const g = flyMeteors[i];
         g.position.add(g.userData.vel);
         g.rotation.x += g.userData.rot.x;
         g.rotation.y += g.userData.rot.y;
         g.rotation.z += g.userData.rot.z;
-        g.userData.life += dt;
 
-        // align tail opposite velocity
-        const v = g.userData.vel;
-        const angle = Math.atan2(v.y, v.x); // in XY plane
-        g.userData.tail.material.rotation = angle + Math.PI; // tail points behind
-        // pulse a bit
-        g.userData.tail.material.opacity = 0.7 + Math.sin(t*6 + i)*0.15;
-
-        // bounds cleanup
         if (g.position.x < -14 || g.position.y < -8 || g.position.z < -12){
           scene.remove(g); flyMeteors.splice(i,1);
         }
